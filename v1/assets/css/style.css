@@ -389,3 +389,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .fan.fan--wheel{width:100%;max-width:660px;aspect-ratio:1/.74;margin-inline:auto}
 .fan.fan--wheel a{left:50%;top:0;width:32%;transform-origin:50% 100%;animation:none!important;transition:box-shadow .2s;will-change:transform,opacity}
 .fan.fan--wheel a:hover,.fan.fan--wheel a:focus-visible{box-shadow:0 0 0 3px var(--accent),0 14px 30px rgba(12,35,64,.3)}
+
+/* фон первого экрана: светлая морская карта (assets/img/morskaya-karta.svg, make_chart_bg.py) вместо линованной карточки */
+.hero-visual{background-color:#e8f0f8;background-image:url("../img/morskaya-karta.svg");background-size:cover;background-position:center;border-color:#c9d8e6}
+.hero-visual::before{display:none}

@@ -25,7 +25,7 @@
       var a = ((theta + i * STEP) % SPAN + SPAN) % SPAN - SPAN / 2;   // от -SPAN/2 до +SPAN/2
       var k = Math.abs(a);
       var s = 1 - Math.min(k, 70) / 70 * 0.18;                         // к краям чуть меньше
-      var o = k < 42 ? 1 : Math.max(0, 1 - (k - 42) / 26);             // и тают
+      var o = k < 24 ? 1 : Math.max(0, 1 - (k - 24) / 14);             // и тают раньше, чем коснутся рамки: обрезанных уголков нет
       var c = cards[i];
       c.style.transform = 'translate(-50%,' + (pivotY - cardH).toFixed(1) + 'px) rotate(' + a.toFixed(2) + 'deg) translateY(' + (-R).toFixed(1) + 'px) scale(' + s.toFixed(3) + ')';
       c.style.opacity = o.toFixed(3);
