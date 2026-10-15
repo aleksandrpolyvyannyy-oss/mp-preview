@@ -100,7 +100,7 @@
       el.setAttribute('data-zero', total === 0 ? 'true' : 'false');
     });
     $$('.cart-link').forEach(function (a) {
-      a.setAttribute('aria-label', 'Заявка, позиций: ' + total);
+      a.setAttribute('aria-label', 'Корзина, позиций: ' + total);
     });
   }
   function nextOrderNo() {
@@ -111,15 +111,15 @@
     return 'Z-2026-' + ('0000' + n).slice(-4);
   }
 
-  /* ---------- кнопка «В заявку» ---------- */
+  /* ---------- кнопка «В корзину» ---------- */
   function addSlot(slug) {
     return '<span class="add-slot" data-slot="' + esc(slug) + '">' + addControl(slug) + '</span>';
   }
   function addControl(slug) {
     if (cartQty(slug) > 0) {
-      return '<a class="btn btn--added" href="korzina.html">В заявке ' + CHECK + '</a>';
+      return '<a class="btn btn--added" href="korzina.html">В корзине ' + CHECK + '</a>';
     }
-    return '<button type="button" class="btn btn--primary" data-add="' + esc(slug) + '">В заявку</button>';
+    return '<button type="button" class="btn btn--primary" data-add="' + esc(slug) + '">В корзину</button>';
   }
   function refreshSlots() {
     $$('.add-slot').forEach(function (slot) {
@@ -135,7 +135,7 @@
     refreshSlots();
     if (slot && slot.firstElementChild) slot.firstElementChild.focus();
     var live = $('#live');
-    if (live) live.textContent = 'Издание добавлено в заявку';
+    if (live) live.textContent = 'Издание добавлено в корзину';
   });
 
   /* ---------- шапка ---------- */
@@ -365,17 +365,17 @@
           '<h1 class="h-page">' + esc(name) + '</h1>' +
           '<dl class="specs">' + spec.map(function (s) { return '<div><dt>' + s[0] + '</dt>' + s[1] + '</div>'; }).join('') + '</dl>' +
           '<div class="buybox">' +
-            (it.price == null ? '<p class="price-big price--ask">Цена по запросу</p><p class="small muted">Издание можно добавить в заявку, цену уточнит менеджер.</p>' : '<p class="price-big">' + money(it.price) + '</p>') +
+            (it.price == null ? '<p class="price-big price--ask">Цена по запросу</p><p class="small muted">Издание можно добавить в корзину, цену уточнит менеджер.</p>' : '<p class="price-big">' + money(it.price) + '</p>') +
             '<div class="buy-row"><div class="qty" role="group" aria-label="Количество">' +
               '<button type="button" data-q="-1" aria-label="Уменьшить количество">&minus;</button>' +
               '<input type="number" id="qty" min="1" max="99" value="1" inputmode="numeric" aria-label="Количество экземпляров">' +
               '<button type="button" data-q="1" aria-label="Увеличить количество">+</button></div>' +
-              '<button type="button" class="btn btn--primary btn--lg" id="add-main">Добавить в заявку</button></div>' +
+              '<button type="button" class="btn btn--primary btn--lg" id="add-main">Добавить в корзину</button></div>' +
             '<p class="buy-status" id="buy-status" role="status"></p>' +
           '</div>' +
           (it.license_note ? '<div class="plaque"><strong>Электронная лицензия</strong><p>' + esc(it.license_note.charAt(0).toUpperCase() + it.license_note.slice(1)) + '</p></div>' : '') +
           '<div class="howto"><h2 class="block-title howto-head">Как заказать</h2><ol>' +
-            '<li>Добавьте издание в заявку.</li><li>Укажите порт или адрес и желаемую дату доставки.</li><li>Бухгалтерия выставит счёт.</li></ol></div>' +
+            '<li>Добавьте издание в корзину.</li><li>Укажите порт или адрес и желаемую дату доставки.</li><li>Бухгалтерия выставит счёт.</li></ol></div>' +
           (it.description ? '<div class="desc"><h2 class="block-title">Описание</h2><p>' + esc(it.description) + '</p></div>' : '') +
         '</div></div>' +
       (related.length ? '<section class="related" aria-labelledby="rel-h"><div class="section-head"><h2 class="h-section" id="rel-h">Из того же раздела</h2></div><div class="pubs">' + related.map(function (r) { return pubCard(r, true); }).join('') + '</div></section>' : '');
@@ -389,11 +389,11 @@
     $('#add-main').addEventListener('click', function () {
       addToCart(it.slug, clamp());
       var n = cartQty(it.slug);
-      status.innerHTML = 'В заявке: ' + n + ' шт. <a href="korzina.html">Открыть заявку</a>';
+      status.innerHTML = 'В корзине: ' + n + ' шт. <a href="korzina.html">Открыть корзину</a>';
       refreshSlots();
     });
     var n0 = cartQty(it.slug);
-    if (n0) status.innerHTML = 'В заявке: ' + n0 + ' шт. <a href="korzina.html">Открыть заявку</a>';
+    if (n0) status.innerHTML = 'В корзине: ' + n0 + ' шт. <a href="korzina.html">Открыть корзину</a>';
   }
 
   /* ---------- заявка: страница ---------- */
@@ -429,7 +429,7 @@
     }
 
     function renderEmpty() {
-      root.innerHTML = '<div class="empty"><h2>В заявке пока пусто</h2><p>Добавьте издания из каталога, затем вернитесь сюда, чтобы указать порт и дату доставки.</p><a class="btn btn--primary btn--lg" href="katalog.html">Перейти в каталог</a></div>';
+      root.innerHTML = '<div class="empty"><h2>В корзине пока пусто</h2><p>Добавьте издания из каталога, затем вернитесь сюда, чтобы указать порт и дату доставки.</p><a class="btn btn--primary btn--lg" href="katalog.html">Перейти в каталог</a></div>';
     }
 
     function renderCart(keepFocus) {

@@ -29,7 +29,7 @@
 
     var name = MP.clean(it.name);
     setMeta(name + ' купить | Морские публикации',
-      name + (it.edition ? ', ' + it.edition : '') + '. Артикул ' + it.sku + (it.price != null ? ', цена ' + MP.money(it.price) : ', цена по запросу') + '. Добавьте издание в заявку, счёт выставит бухгалтерия.');
+      name + (it.edition ? ', ' + it.edition : '') + '. Артикул ' + it.sku + (it.price != null ? ', цена ' + MP.money(it.price) : ', цена по запросу') + '. Добавьте издание в корзину, счёт выставит бухгалтерия.');
 
     /* шапка страницы: крошки и заголовок */
     var crumbs = headEl.querySelector('.crumbs');
@@ -68,12 +68,12 @@
                 '<input id="q-val" type="number" min="1" max="99" value="1" inputmode="numeric" aria-labelledby="qty-label">' +
                 '<button type="button" id="q-plus" aria-label="Увеличить количество">+</button>' +
               '</div></div>' +
-              '<button class="btn btn--signal btn--lg" type="button" id="p-add">Добавить в заявку</button>' +
+              '<button class="btn btn--signal btn--lg" type="button" id="p-add">Добавить в корзину</button>' +
             '</div>' +
             '<p class="buy__status" id="p-status" role="status" aria-live="polite"></p>' +
           '</div>' +
           '<section class="howto" aria-labelledby="howto-title"><h2 id="howto-title">Как заказать</h2>' +
-            '<ol><li>Добавьте издание в заявку.</li><li>Укажите порт и дату доставки.</li><li>Получите счёт от бухгалтерии.</li></ol></section>' +
+            '<ol><li>Добавьте издание в корзину.</li><li>Укажите порт и дату доставки.</li><li>Получите счёт от бухгалтерии.</li></ol></section>' +
           (it.description ? '<section class="prod__desc" aria-labelledby="desc-title"><h2 id="desc-title">Описание</h2><p>' + MP.esc(MP.clean(it.description)) + '</p></section>' : '') +
           (it.license_note ? '<section class="licnote" aria-labelledby="lic-title"><h2 id="lic-title">Электронная лицензия</h2><p>' + MP.esc(cap(it.license_note)) + '</p></section>' : '') +
         '</div>' +
@@ -91,10 +91,10 @@
       var n = q();
       MP.cart.add(it.slug, n);
       var total = MP.cart.qty(it.slug);
-      status.innerHTML = 'Добавлено в заявку, всего: ' + total + ' шт. <a href="korzina.html">Перейти в заявку</a>';
+      status.innerHTML = 'Добавлено в корзину, всего: ' + total + ' шт. <a href="korzina.html">Перейти в корзину</a>';
     });
     if (MP.cart.has(it.slug)) {
-      status.innerHTML = 'Уже в заявке: ' + MP.cart.qty(it.slug) + ' шт. <a href="korzina.html">Перейти в заявку</a>';
+      status.innerHTML = 'Уже в корзине: ' + MP.cart.qty(it.slug) + ' шт. <a href="korzina.html">Перейти в корзину</a>';
     }
   }
 

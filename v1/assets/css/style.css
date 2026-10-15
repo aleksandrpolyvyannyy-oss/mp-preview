@@ -384,3 +384,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* ---------- веер по кругу (fan.js, решение заказчика 15.10: движение видят все) ---------- */
+.fan.fan--wheel{width:100%;max-width:660px;aspect-ratio:1/.74;margin-inline:auto}
+.fan.fan--wheel a{left:50%;top:0;width:32%;transform-origin:50% 100%;animation:none!important;transition:box-shadow .2s;will-change:transform,opacity}
+.fan.fan--wheel a:hover,.fan.fan--wheel a:focus-visible{box-shadow:0 0 0 3px var(--accent),0 14px 30px rgba(12,35,64,.3)}

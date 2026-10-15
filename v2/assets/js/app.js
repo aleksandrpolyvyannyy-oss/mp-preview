@@ -102,7 +102,7 @@
     var els = document.querySelectorAll('[data-cart-count]');
     for (var i = 0; i < els.length; i++) els[i].textContent = n;
     var link = document.querySelector('.cartlink');
-    if (link) link.setAttribute('aria-label', 'Заявка, ' + n + ' ' + MP.plural(n, ['позиция', 'позиции', 'позиций']));
+    if (link) link.setAttribute('aria-label', 'Корзина, ' + n + ' ' + MP.plural(n, ['позиция', 'позиции', 'позиций']));
   };
 
   /* ---------- озвучка действий ---------- */
@@ -121,8 +121,8 @@
 
   /* ---------- карточка издания в списке ---------- */
   MP.actionHtml = function (slug) {
-    if (MP.cart.has(slug)) return '<a class="btn btn--done" href="korzina.html">В заявке <span class="tick" aria-hidden="true">✓</span></a>';
-    return '<button class="btn btn--signal" type="button" data-add="' + MP.esc(slug) + '">В заявку</button>';
+    if (MP.cart.has(slug)) return '<a class="btn btn--done" href="korzina.html">В корзине <span class="tick" aria-hidden="true">✓</span></a>';
+    return '<button class="btn btn--signal" type="button" data-add="' + MP.esc(slug) + '">В корзину</button>';
   };
   MP.card = function (item, opts) {
     opts = opts || {};
@@ -160,7 +160,7 @@
       MP.cart.add(slug, 1);
       MP.refreshActions();
       if (slot) { var a = slot.querySelector('a'); if (a) a.focus(); }
-      MP.say('Добавлено в заявку: ' + name);
+      MP.say('Добавлено в корзину: ' + name);
     }
   });
   document.addEventListener('mp:cart', MP.refreshActions);

@@ -35,7 +35,7 @@
   function skeleton() {
     root.innerHTML =
       '<div class="order" id="order">' +
-        '<section class="order__list" aria-labelledby="list-title"><h2 id="list-title">Позиции в заявке</h2><div id="cart-list"></div></section>' +
+        '<section class="order__list" aria-labelledby="list-title"><h2 id="list-title">Позиции в корзине</h2><div id="cart-list"></div></section>' +
         '<section class="order__form" aria-labelledby="form-title"><h2 id="form-title">Данные для счёта</h2>' +
           '<div class="totals" id="totals" aria-live="polite"></div>' +
           '<form id="order-form" novalidate>' +
@@ -75,7 +75,7 @@
   }
 
   function emptyState() {
-    root.innerHTML = '<div style="padding-block:32px 80px"><div class="empty-cart"><h2>В заявке пока пусто</h2>' +
+    root.innerHTML = '<div style="padding-block:32px 80px"><div class="empty-cart"><h2>В корзине пока пусто</h2>' +
       '<p>Добавьте издания из каталога. Цену и итог мы покажем здесь, счёт выставит бухгалтерия.</p>' +
       '<a class="btn btn--signal btn--lg" href="katalog.html">Перейти в каталог</a></div></div>';
     els = {};
@@ -107,7 +107,7 @@
               '<button type="button" data-q="1" aria-label="Увеличить количество">+</button>' +
             '</div>' +
             '<div class="cart-row__sum">' + sum + '</div>' +
-            '<button class="link-btn" type="button" data-remove aria-label="Удалить из заявки: ' + MP.esc(name) + '">Удалить</button>' +
+            '<button class="link-btn" type="button" data-remove aria-label="Удалить из корзины: ' + MP.esc(name) + '">Удалить</button>' +
           '</div>' +
         '</div></article>';
     }).join('');
@@ -116,7 +116,7 @@
     rows.forEach(function (r) { if (r.it.price == null) ask++; else sum += r.it.price * r.n; });
     var t = '<p>Сумма по позициям с ценой: <span class="big">' + MP.money(sum) + '</span></p>';
     if (ask) t += '<p>' + ask + ' ' + MP.plural(ask, ['позиция', 'позиции', 'позиций']) + ' по запросу, цену уточнит менеджер</p>';
-    t += '<p>В заявке: ' + rows.length + ' ' + MP.plural(rows.length, ['позиция', 'позиции', 'позиций']) + '</p>';
+    t += '<p>В корзине: ' + rows.length + ' ' + MP.plural(rows.length, ['позиция', 'позиции', 'позиций']) + '</p>';
     els.totals.innerHTML = t;
 
     if (focusSel) {
@@ -140,7 +140,7 @@
       var next = row.nextElementSibling || row.previousElementSibling;
       MP.cart.remove(slug);
       renderList(next ? '.cart-row[data-slug="' + next.getAttribute('data-slug') + '"] [data-remove]' : null);
-      MP.say('Позиция удалена из заявки');
+      MP.say('Позиция удалена из корзины');
     }
   }
   function onListChange(e) {
