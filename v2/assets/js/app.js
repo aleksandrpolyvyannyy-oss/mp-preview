@@ -52,6 +52,135 @@
     el.innerHTML = '<div class="wrap"><div class="empty"><h2>Каталог не загрузился</h2><p>Обновите страницу. Если макет открыт с диска, запустите его через локальный сервер.</p></div></div>';
   };
 
+  /* ---------- разделы и издатели: адреса страниц ---------- */
+  /* порядок как в меню; ключ = поле section из catalog.json, slug совпадает с razdely.json */
+  MP.SECTIONS = [
+    { key: 'Судовые журналы', slug: 'sudovye-zhurnaly' },
+    { key: 'ITU', slug: 'itu' },
+    { key: 'IMO: конвенции', slug: 'imo-konvencii' },
+    { key: 'IMO: кодексы', slug: 'imo-kodeksy' },
+    { key: 'IMO: руководства', slug: 'imo-rukovodstva' },
+    { key: 'Контроль государства порта', slug: 'kontrol-gosudarstva-porta' },
+    { key: 'Радиосвязь РФ', slug: 'radiosvyaz' },
+    { key: 'Admiralty', slug: 'admiralty' },
+    { key: 'OCIMF и ICS', slug: 'ocimf-ics' }
+  ];
+  MP.PUBLISHERS = [
+    { key: 'ЦНИИМФ', slug: 'cniimf' },
+    { key: 'IMO', slug: 'imo' },
+    { key: 'ITU', slug: 'itu' }
+  ];
+  function lookup(list, field, value) {
+    for (var i = 0; i < list.length; i++) if (list[i][field] === value) return list[i];
+    return null;
+  }
+  MP.sectionSlug = function (key) { var r = lookup(MP.SECTIONS, 'key', key); return r ? r.slug : ''; };
+  MP.sectionBySlug = function (slug) { return lookup(MP.SECTIONS, 'slug', slug); };
+  MP.sectionHref = function (key) { var s = MP.sectionSlug(key); return s ? 'razdel.html?slug=' + encodeURIComponent(s) : 'katalog.html'; };
+  MP.publisherSlug = function (key) { var r = lookup(MP.PUBLISHERS, 'key', key); return r ? r.slug : ''; };
+  MP.publisherBySlug = function (slug) { return lookup(MP.PUBLISHERS, 'slug', slug); };
+  MP.publisherHref = function (key) { var s = MP.publisherSlug(key); return s ? 'izdatel.html?slug=' + encodeURIComponent(s) : 'katalog.html'; };
+
+  /* ---------- тексты: data/content/*.json ---------- */
+  var contentCache = {};
+  /* null, если файла ещё нет или он не разобрался: страница покажет «Раздел готовится» */
+  MP.loadContent = function (path) {
+    if (!contentCache[path]) {
+      contentCache[path] = fetch('../data/content/' + path).then(function (r) {
+        if (!r.ok) return null;
+        return r.json().catch(function () { return null; });
+      }).catch(function () { return null; });
+    }
+    return contentCache[path];
+  };
+  /* словарь {ключ: запись} из объекта или из массива записей */
+  MP.contentMap = function (data, keyFields) {
+    var map = {};
+    if (!data || typeof data !== 'object') return map;
+    if (!Array.isArray(data)) {
+      var names = Object.keys(data);
+      if (names.length === 1 && data[names[0]] && typeof data[names[0]] === 'object' && !('slug' in data[names[0]])) {
+        var inner = data[names[0]];
+        if (Array.isArray(inner) || Object.keys(inner).some(function (k) { return inner[k] && inner[k].slug; })) data = inner;
+      }
+    }
+    if (Array.isArray(data)) {
+      data.forEach(function (rec) {
+        if (!rec || typeof rec !== 'object') return;
+        for (var i = 0; i < keyFields.length; i++) if (rec[keyFields[i]]) { map[rec[keyFields[i]]] = rec; return; }
+        if (rec.slug) map[rec.slug] = rec;
+      });
+    } else {
+      Object.keys(data).forEach(function (k) { if (data[k] && typeof data[k] === 'object') map[k] = data[k]; });
+    }
+    return map;
+  };
+  MP.findBySlug = function (map, slug) {
+    var keys = Object.keys(map);
+    for (var i = 0; i < keys.length; i++) if (map[keys[i]].slug === slug) return { key: keys[i], rec: map[keys[i]] };
+    return null;
+  };
+  /* текст с markdown-ссылками [текст](адрес) и **жирным**: всё остальное экранируется */
+  var INTERNAL = /^(kartochka|stranica|razdel|izdatel|katalog|korzina|index)\.html(\?[\w%=&.\-]*)?(#[\w\-]*)?$/;
+  MP.rich = function (text) {
+    var s = String(text == null ? '' : text), out = '', last = 0, m;
+    var re = /\[([^\]\n]+)\]\(([^)\s]+)\)|\*\*([^*\n]+)\*\*/g;
+    function plain(t) { return MP.esc(MP.clean(t)); }
+    while ((m = re.exec(s))) {
+      out += plain(s.slice(last, m.index));
+      if (m[3] != null) out += '<strong>' + plain(m[3]) + '</strong>';
+      else if (INTERNAL.test(m[2])) out += '<a href="' + MP.esc(m[2]) + '">' + plain(m[1]) + '</a>';
+      else if (/^https:\/\/[^\s"'<>]+$/.test(m[2])) out += '<a href="' + MP.esc(m[2]) + '" target="_blank" rel="noopener">' + plain(m[1]) + '</a>';
+      else out += plain(m[1]);
+      last = re.lastIndex;
+    }
+    return out + plain(s.slice(last));
+  };
+  MP.paras = function (v) {
+    if (v == null || v === '') return [];
+    return (Array.isArray(v) ? v : String(v).split(/\n{2,}/)).filter(function (x) { return x != null && String(x).trim() !== ''; });
+  };
+  MP.setMeta = function (title, desc) {
+    if (title) document.title = MP.clean(title);
+    var m = document.querySelector('meta[name="description"]');
+    if (m && desc) m.setAttribute('content', MP.clean(desc));
+  };
+  MP.soon = function (what) {
+    return '<div class="wrap"><div class="soon"><h2>' + MP.esc(what || 'Раздел') + ' готовится</h2><p>Текст появится здесь после согласования. Каталог и корзина работают как обычно.</p><a class="btn btn--ink" href="katalog.html">Перейти в каталог</a></div></div>';
+  };
+  MP.faqHtml = function (items) {
+    var rows = (items || []).map(function (f) {
+      var q = f && (f.q || f.question), a = f && (f.a || f.answer);
+      if (!q) return '';
+      return '<details><summary>' + MP.esc(MP.clean(q)) + '</summary>' + MP.paras(a).map(function (p) { return '<p>' + MP.rich(p) + '</p>'; }).join('') + '</details>';
+    }).join('');
+    return rows ? '<div class="faq">' + rows + '</div>' : '';
+  };
+
+  /* названия информационных страниц, пока их json не загружен */
+  MP.PAGES = {
+    'licenzii-itu': 'Электронные лицензии ITU',
+    'novye-redakcii-2026': 'Новые редакции 2026',
+    'obyazatelnye-publikacii': 'Обязательные публикации на борту',
+    'oplata-i-dostavka': 'Оплата и доставка',
+    'o-kompanii': 'О компании',
+    'kontakty': 'Контакты'
+  };
+  /* тёмная шапка страницы: крошки [[текст, адрес или null], ...], заголовок, подзаголовок */
+  MP.head = function (crumbs, h1, lead, extra) {
+    var el = document.getElementById('page-head');
+    if (!el) return;
+    var c = crumbs.map(function (x) {
+      return x[1] ? '<li><a href="' + MP.esc(x[1]) + '">' + MP.esc(x[0]) + '</a></li>'
+        : '<li><span aria-current="page" title="' + MP.esc(x[0]) + '">' + MP.esc(x[0]) + '</span></li>';
+    }).join('');
+    el.innerHTML = '<section class="pagehead chart-bg chart-edge"><div class="wrap">' +
+      '<nav aria-label="Хлебные крошки"><ol class="crumbs">' + c + '</ol></nav>' +
+      '<h1 id="page-title">' + MP.esc(MP.clean(h1)) + '</h1>' +
+      (lead ? '<p class="pagehead__lead">' + MP.esc(MP.clean(lead)) + '</p>' : '') +
+      (extra || '') + '</div></section>';
+  };
+
   /* ---------- корзина ---------- */
   function read() {
     try {
@@ -179,8 +308,37 @@
       burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     }
     burger.addEventListener('click', function () { set(!header.classList.contains('is-open')); });
+
+    /* выпадающие списки: на компьютере открываются и по наведению (CSS), и кнопкой со стрелкой */
+    var subs = header.querySelectorAll('.nav__item--sub');
+    function toggleSub(li, open) {
+      var b = li.querySelector('.nav__more');
+      li.classList.toggle('is-open', open);
+      if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function closeSubs(except) {
+      for (var i = 0; i < subs.length; i++) if (subs[i] !== except) toggleSub(subs[i], false);
+    }
+    Array.prototype.forEach.call(subs, function (li) {
+      var b = li.querySelector('.nav__more');
+      if (!b) return;
+      b.addEventListener('click', function () {
+        var open = !li.classList.contains('is-open');
+        closeSubs(li);
+        toggleSub(li, open);
+      });
+      li.addEventListener('focusout', function (e) {
+        if (e.relatedTarget && !li.contains(e.relatedTarget)) toggleSub(li, false);
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.nav__item--sub')) closeSubs(null);
+    });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && header.classList.contains('is-open')) { set(false); burger.focus(); }
+      if (e.key !== 'Escape') return;
+      var openSub = header.querySelector('.nav__item--sub.is-open');
+      if (openSub) { var btn = openSub.querySelector('.nav__more'); closeSubs(null); if (btn) btn.focus(); return; }
+      if (header.classList.contains('is-open')) { set(false); burger.focus(); }
     });
     var links = header.querySelectorAll('.nav a');
     for (var i = 0; i < links.length; i++) links[i].addEventListener('click', function () { set(false); });

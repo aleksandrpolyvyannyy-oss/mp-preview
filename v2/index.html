@@ -18,10 +18,33 @@
     <a class="logo" href="index.html" aria-label="Морские публикации, на главную"><svg viewBox="-20 -20 40 40" aria-hidden="true" focusable="false"><circle r="17" fill="none" stroke="#9DBBD6" stroke-width="1.4"/><circle r="12" fill="none" stroke="#9DBBD6" stroke-width="1" stroke-dasharray="1.5 2.5"/><path d="M0-17L4 0 0 17-4 0Z" fill="#fff"/><path d="M-17 0L0-4 17 0 0 4Z" fill="#9DBBD6"/><path d="M0-17L4 0 0 3Z" fill="#FF6B1A"/></svg><span>Морские публикации</span></a>
     <nav class="nav" id="nav" aria-label="Основное меню">
       <ul class="nav__list">
-        <li><a href="katalog.html">Каталог</a></li>
-        <li><a href="index.html#kak-zakazat">Как заказать</a></li>
-        <li><a href="index.html#faq">Доставка и оплата</a></li>
-        <li><a href="#kontakty">Контакты</a></li>
+        <li class="nav__item nav__item--sub">
+          <a href="katalog.html">Каталог</a>
+          <button class="nav__more" type="button" aria-expanded="false" aria-label="Разделы каталога"><svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg></button>
+          <ul class="nav__sub">
+            <li><a href="katalog.html">Все издания</a></li>
+            <li><a href="razdel.html?slug=sudovye-zhurnaly">Судовые журналы</a></li>
+            <li><a href="razdel.html?slug=itu">ITU</a></li>
+            <li><a href="razdel.html?slug=imo-konvencii">IMO: конвенции</a></li>
+            <li><a href="razdel.html?slug=imo-kodeksy">IMO: кодексы</a></li>
+            <li><a href="razdel.html?slug=imo-rukovodstva">IMO: руководства</a></li>
+            <li><a href="razdel.html?slug=kontrol-gosudarstva-porta">Контроль государства порта</a></li>
+            <li><a href="razdel.html?slug=radiosvyaz">Радиосвязь РФ</a></li>
+            <li><a href="razdel.html?slug=admiralty">Admiralty</a></li>
+            <li><a href="razdel.html?slug=ocimf-ics">OCIMF и ICS</a></li>
+          </ul>
+        </li>
+        <li><a href="stranica.html?slug=oplata-i-dostavka">Как заказать</a></li>
+        <li class="nav__item nav__item--sub">
+          <a href="stranica.html?slug=licenzii-itu" data-useful-root>Полезное</a>
+          <button class="nav__more" type="button" aria-expanded="false" aria-label="Полезные страницы"><svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg></button>
+          <ul class="nav__sub">
+            <li><a href="stranica.html?slug=licenzii-itu">Электронные лицензии ITU</a></li>
+            <li><a href="stranica.html?slug=novye-redakcii-2026">Новые редакции 2026</a></li>
+            <li><a href="stranica.html?slug=obyazatelnye-publikacii">Обязательные публикации на борту</a></li>
+          </ul>
+        </li>
+        <li><a href="stranica.html?slug=kontakty">Контакты</a></li>
       </ul>
       <form class="hsearch" role="search" action="katalog.html" method="get">
         <label class="sr-only" for="hq">Поиск по каталогу</label>
@@ -70,33 +93,46 @@
       <a class="textlink" href="katalog.html">Весь каталог</a>
     </div>
     <div class="tiles" id="tiles">
-      <a class="tile tile--major" href="katalog.html?group=IMO" data-group="IMO">
-        <div class="tile__top"><h3>IMO</h3><span class="tile__count"><b data-count>27</b><span data-count-word>изданий</span></span></div>
-        <p>Конвенции, кодексы и руководства: СОЛАС, МАРПОЛ, ПДНВ, МППСС, МКУБ, ОСПС, IMDG и другие.</p>
+      <a class="tile tile--major" href="razdel.html?slug=imo-konvencii" data-section="IMO: конвенции">
+        <div class="tile__top"><h3>IMO: конвенции</h3><span class="tile__count"><b data-count>8</b><span data-count-word>изданий</span></span></div>
+        <p>СОЛАС, МАРПОЛ, ПДНВ, МППСС, конвенция о труде в морском судоходстве, грузовая марка, балластные воды.</p>
         <div class="tile__covers">
           <img src="../covers/solas.webp" width="600" height="923" loading="lazy" alt="Конвенция СОЛАС-74, издание 2024, книги 1 и 2">
           <img src="../covers/stcw.webp" width="600" height="848" loading="lazy" alt="Конвенция и Кодекс ПДНВ (STCW), издание IMO 2026, английский, цифровое">
-          <img src="../covers/ism.webp" width="480" height="672" loading="lazy" alt="Кодекс МКУБ (ISM Code) с руководствами по выполнению, издание ЦНИИМФ 2026">
+          <img src="../covers/colreg-cniimf.webp" width="600" height="850" loading="lazy" alt="МППСС-72 (COLREG-72), издание ЦНИИМФ 2026">
+          <img src="../covers/colreg.webp" width="600" height="851" loading="lazy" alt="Конвенция МППСС-72 (русский текст), издание IMO 2026">
         </div>
       </a>
-      <a class="tile tile--wide" href="katalog.html?group=ITU" data-group="ITU">
-        <div class="tile__top"><h3>ITU</h3><span class="tile__count"><b data-count>4</b><span data-count-word>издания</span></span></div>
+      <a class="tile" href="razdel.html?slug=itu" data-section="ITU">
+        <div class="tile__top"><h3>ITU</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
         <p>Электронные лицензии: List IV, List V, Maritime Manual, а также Регламент радиосвязи.</p>
       </a>
-      <a class="tile" href="katalog.html?group=%D0%A1%D1%83%D0%B4%D0%BE%D0%B2%D1%8B%D0%B5%20%D0%B6%D1%83%D1%80%D0%BD%D0%B0%D0%BB%D1%8B" data-group="Судовые журналы">
-        <div class="tile__top"><h3>Судовые журналы</h3><span class="tile__count"><b data-count>4</b><span data-count-word>издания</span></span></div>
+      <a class="tile" href="razdel.html?slug=sudovye-zhurnaly" data-section="Судовые журналы">
+        <div class="tile__top"><h3>Судовые журналы</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
         <p>Палубный и машинный журналы, журналы нефтяных операций и операций с мусором.</p>
       </a>
-      <a class="tile" href="katalog.html?group=%D0%A0%D0%B0%D0%B4%D0%B8%D0%BE%D1%81%D0%B2%D1%8F%D0%B7%D1%8C" data-group="Радиосвязь">
-        <div class="tile__top"><h3>Радиосвязь</h3><span class="tile__count"><b data-count>2</b><span data-count-word>издания</span></span></div>
+      <a class="tile" href="razdel.html?slug=imo-kodeksy" data-section="IMO: кодексы">
+        <div class="tile__top"><h3>IMO: кодексы</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
+        <p>МКУБ, ОСПС, IMDG, Полярный кодекс, ЛСА, ПСБ, МКХ, МКГ и другие.</p>
+      </a>
+      <a class="tile" href="razdel.html?slug=imo-rukovodstva" data-section="IMO: руководства">
+        <div class="tile__top"><h3>IMO: руководства</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
+        <p>Наставление ИАМСАР, сборник резолюций ИМО, модельные курсы, медицинское руководство.</p>
+      </a>
+      <a class="tile" href="razdel.html?slug=kontrol-gosudarstva-porta" data-section="Контроль государства порта">
+        <div class="tile__top"><h3>Контроль государства порта</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
+        <p>Парижский и Токийский меморандумы по контролю судов государством порта.</p>
+      </a>
+      <a class="tile" href="razdel.html?slug=radiosvyaz" data-section="Радиосвязь РФ">
+        <div class="tile__top"><h3>Радиосвязь РФ</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
         <p>Радиожурнал ГМССБ и правила радиосвязи морской подвижной службы.</p>
       </a>
-      <a class="tile" href="katalog.html?group=Admiralty" data-group="Admiralty">
-        <div class="tile__top"><h3>Admiralty</h3><span class="tile__count"><b data-count>1</b><span data-count-word>издание</span></span></div>
+      <a class="tile" href="razdel.html?slug=admiralty" data-section="Admiralty">
+        <div class="tile__top"><h3>Admiralty</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
         <p>Admiralty List of Radio Signals, тома NP281 и далее.</p>
       </a>
-      <a class="tile" href="katalog.html?group=OCIMF%20%D0%B8%20ICS" data-group="OCIMF и ICS">
-        <div class="tile__top"><h3>OCIMF и ICS</h3><span class="tile__count"><b data-count>2</b><span data-count-word>издания</span></span></div>
+      <a class="tile" href="razdel.html?slug=ocimf-ics" data-section="OCIMF и ICS">
+        <div class="tile__top"><h3>OCIMF и ICS</h3><span class="tile__count"><b data-count>0</b><span data-count-word>изданий</span></span></div>
         <p>ISGOTT и Mooring Equipment Guidelines для танкеров и терминалов.</p>
       </a>
     </div>
@@ -113,7 +149,18 @@
   </div>
 </section>
 
-<section class="section section--sheet" id="kak-zakazat" aria-labelledby="how-title">
+<section class="section section--sheet" aria-labelledby="pub-title">
+  <div class="wrap">
+    <div class="section__head"><h2 id="pub-title">Издатели</h2></div>
+    <ul class="pubtiles">
+      <li><a class="pubtile" href="izdatel.html?slug=cniimf" data-publisher="ЦНИИМФ"><span class="pubtile__covers" data-covers aria-hidden="true"></span><span class="pubtile__name">ЦНИИМФ</span><span class="pubtile__count"><b data-count>11</b> <span data-count-word>изданий</span></span></a></li>
+      <li><a class="pubtile" href="izdatel.html?slug=imo" data-publisher="IMO"><span class="pubtile__covers" data-covers aria-hidden="true"></span><span class="pubtile__name">IMO</span><span class="pubtile__count"><b data-count>4</b> <span data-count-word>издания</span></span></a></li>
+      <li><a class="pubtile" href="izdatel.html?slug=itu" data-publisher="ITU"><span class="pubtile__covers" data-covers aria-hidden="true"></span><span class="pubtile__name">ITU</span><span class="pubtile__count"><b data-count>3</b> <span data-count-word>издания</span></span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--paper" id="kak-zakazat" aria-labelledby="how-title">
   <div class="wrap">
     <div class="section__head"><h2 id="how-title">Как заказать</h2></div>
     <ol class="route">
@@ -136,13 +183,27 @@
       <h2 class="h2" id="itu-title">Электронные лицензии ITU</h2>
       <p>List IV, List V и Maritime Manual выходят как электронные лицензии. После покупки ITU присылает инструкцию, по ней лицензию и активируют.</p>
       <p class="itu__note">Для установки нужна Windows версии 10 или новее.</p>
-      <a class="btn btn--signal" href="katalog.html?group=ITU">Лицензии ITU в каталоге</a>
+      <div class="itu__actions"><a class="btn btn--signal" href="katalog.html?group=ITU">Лицензии ITU в каталоге</a><a class="btn btn--line" href="stranica.html?slug=licenzii-itu">Как работают лицензии</a></div>
     </div>
     <ul class="itu__cards pubs--list" id="itu-cards"></ul>
   </div>
 </section>
 
-<section class="section section--paper" id="faq" aria-labelledby="faq-title">
+<section class="section section--sheet" id="poleznoe" aria-labelledby="use-title">
+  <div class="wrap">
+    <div class="section__head"><h2 id="use-title">Полезное судовладельцу</h2></div>
+    <ul class="useful" id="useful"><li class="soon soon--inline"><h3>Раздел готовится</h3></li></ul>
+  </div>
+</section>
+
+<section class="section section--paper" id="pochemu" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="section__head"><h2 id="why-title">Почему удобно заказывать у нас</h2></div>
+    <ol class="why" id="why"><li class="soon soon--inline"><h3>Раздел готовится</h3></li></ol>
+  </div>
+</section>
+
+<section class="section section--sheet" id="faq" aria-labelledby="faq-title">
   <div class="wrap">
     <div class="section__head"><h2 id="faq-title">Вопросы и ответы</h2></div>
     <div class="faq">
@@ -160,29 +221,52 @@
   </div>
 </section>
 </main>
-<footer class="site-footer chart-bg" id="kontakty">
+<footer class="site-footer chart-bg">
   <div class="wrap">
     <div class="site-footer__grid">
-      <div>
+      <div class="site-footer__brand">
         <a class="logo" href="index.html" aria-label="Морские публикации, на главную"><svg viewBox="-20 -20 40 40" aria-hidden="true" focusable="false"><circle r="17" fill="none" stroke="#9DBBD6" stroke-width="1.4"/><circle r="12" fill="none" stroke="#9DBBD6" stroke-width="1" stroke-dasharray="1.5 2.5"/><path d="M0-17L4 0 0 17-4 0Z" fill="#fff"/><path d="M-17 0L0-4 17 0 0 4Z" fill="#9DBBD6"/><path d="M0-17L4 0 0 3Z" fill="#FF6B1A"/></svg><span>Морские публикации</span></a>
         <p>Нормативные издания для судов и судоходных компаний. Заявка на сайте, счёт выставляет бухгалтерия.</p>
-        <p class="mono" style="margin-top:14px">ООО «…», ИНН …</p>
-      </div>
-      <div>
-        <h2>Связь</h2>
-        <ul>
+        <p class="mono site-footer__req">ООО «…», ИНН …</p>
+        <ul class="site-footer__contacts">
           <li><a href="mailto:info@example.ru">info@example.ru</a></li>
           <li><a class="mono" href="tel:+70000000000">+7 000 000-00-00</a></li>
         </ul>
       </div>
-      <div>
-        <h2>Документы</h2>
+      <nav aria-labelledby="fcat">
+        <h2 id="fcat">Каталог</h2>
         <ul>
+          <li><a href="katalog.html">Все издания</a></li>
+          <li><a href="razdel.html?slug=sudovye-zhurnaly">Судовые журналы</a></li>
+          <li><a href="razdel.html?slug=itu">ITU</a></li>
+          <li><a href="razdel.html?slug=imo-konvencii">IMO: конвенции</a></li>
+          <li><a href="razdel.html?slug=imo-kodeksy">IMO: кодексы</a></li>
+          <li><a href="razdel.html?slug=imo-rukovodstva">IMO: руководства</a></li>
+          <li><a href="razdel.html?slug=kontrol-gosudarstva-porta">Контроль государства порта</a></li>
+          <li><a href="razdel.html?slug=radiosvyaz">Радиосвязь РФ</a></li>
+          <li><a href="razdel.html?slug=admiralty">Admiralty</a></li>
+          <li><a href="razdel.html?slug=ocimf-ics">OCIMF и ICS</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="fbuy">
+        <h2 id="fbuy">Покупателям</h2>
+        <ul>
+          <li><a href="stranica.html?slug=oplata-i-dostavka">Оплата и доставка</a></li>
+          <li><a href="stranica.html?slug=licenzii-itu">Электронные лицензии ITU</a></li>
+          <li><a href="stranica.html?slug=novye-redakcii-2026">Новые редакции 2026</a></li>
+          <li><a href="stranica.html?slug=obyazatelnye-publikacii">Обязательные публикации</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="fco">
+        <h2 id="fco">Компания</h2>
+        <ul>
+          <li><a href="stranica.html?slug=o-kompanii">О компании</a></li>
+          <li><a href="stranica.html?slug=kontakty">Контакты</a></li>
           <li><a href="#">Политика обработки персональных данных</a></li>
           <li><a href="#">Пользовательское соглашение</a></li>
           <li><a href="#">Реквизиты</a></li>
         </ul>
-      </div>
+      </nav>
     </div>
     <p class="site-footer__legal">© 2026 Морские публикации</p>
   </div>

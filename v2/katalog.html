@@ -18,10 +18,33 @@
     <a class="logo" href="index.html" aria-label="Морские публикации, на главную"><svg viewBox="-20 -20 40 40" aria-hidden="true" focusable="false"><circle r="17" fill="none" stroke="#9DBBD6" stroke-width="1.4"/><circle r="12" fill="none" stroke="#9DBBD6" stroke-width="1" stroke-dasharray="1.5 2.5"/><path d="M0-17L4 0 0 17-4 0Z" fill="#fff"/><path d="M-17 0L0-4 17 0 0 4Z" fill="#9DBBD6"/><path d="M0-17L4 0 0 3Z" fill="#FF6B1A"/></svg><span>Морские публикации</span></a>
     <nav class="nav" id="nav" aria-label="Основное меню">
       <ul class="nav__list">
-        <li><a href="katalog.html" aria-current="page">Каталог</a></li>
-        <li><a href="index.html#kak-zakazat">Как заказать</a></li>
-        <li><a href="index.html#faq">Доставка и оплата</a></li>
-        <li><a href="#kontakty">Контакты</a></li>
+        <li class="nav__item nav__item--sub">
+          <a href="katalog.html" aria-current="page">Каталог</a>
+          <button class="nav__more" type="button" aria-expanded="false" aria-label="Разделы каталога"><svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg></button>
+          <ul class="nav__sub">
+            <li><a href="katalog.html">Все издания</a></li>
+            <li><a href="razdel.html?slug=sudovye-zhurnaly">Судовые журналы</a></li>
+            <li><a href="razdel.html?slug=itu">ITU</a></li>
+            <li><a href="razdel.html?slug=imo-konvencii">IMO: конвенции</a></li>
+            <li><a href="razdel.html?slug=imo-kodeksy">IMO: кодексы</a></li>
+            <li><a href="razdel.html?slug=imo-rukovodstva">IMO: руководства</a></li>
+            <li><a href="razdel.html?slug=kontrol-gosudarstva-porta">Контроль государства порта</a></li>
+            <li><a href="razdel.html?slug=radiosvyaz">Радиосвязь РФ</a></li>
+            <li><a href="razdel.html?slug=admiralty">Admiralty</a></li>
+            <li><a href="razdel.html?slug=ocimf-ics">OCIMF и ICS</a></li>
+          </ul>
+        </li>
+        <li><a href="stranica.html?slug=oplata-i-dostavka">Как заказать</a></li>
+        <li class="nav__item nav__item--sub">
+          <a href="stranica.html?slug=licenzii-itu" data-useful-root>Полезное</a>
+          <button class="nav__more" type="button" aria-expanded="false" aria-label="Полезные страницы"><svg width="14" height="9" viewBox="0 0 14 9" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l6 6 6-6"/></svg></button>
+          <ul class="nav__sub">
+            <li><a href="stranica.html?slug=licenzii-itu">Электронные лицензии ITU</a></li>
+            <li><a href="stranica.html?slug=novye-redakcii-2026">Новые редакции 2026</a></li>
+            <li><a href="stranica.html?slug=obyazatelnye-publikacii">Обязательные публикации на борту</a></li>
+          </ul>
+        </li>
+        <li><a href="stranica.html?slug=kontakty">Контакты</a></li>
       </ul>
       <form class="hsearch" role="search" action="katalog.html" method="get">
         <label class="sr-only" for="hq">Поиск по каталогу</label>
@@ -46,7 +69,7 @@
     <button class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel"><span>Разделы и издатели</span><span class="mono" data-filter-badge></span></button>
     <form class="filters-panel" id="filters-panel" onsubmit="return false">
       <fieldset class="filters__group"><legend>Раздел</legend><div id="f-group"></div></fieldset>
-      <fieldset class="filters__group"><legend>Издатель</legend><div id="f-publisher"></div></fieldset>
+      <fieldset class="filters__group"><legend>Издатель</legend><div id="f-publisher"></div><div class="filters__link" id="f-pub-link"></div></fieldset>
       <button class="btn btn--outline btn--block" type="button" id="f-reset">Сбросить фильтры</button>
     </form>
   </aside>
@@ -60,29 +83,52 @@
   </section>
 </div>
 </main>
-<footer class="site-footer chart-bg" id="kontakty">
+<footer class="site-footer chart-bg">
   <div class="wrap">
     <div class="site-footer__grid">
-      <div>
+      <div class="site-footer__brand">
         <a class="logo" href="index.html" aria-label="Морские публикации, на главную"><svg viewBox="-20 -20 40 40" aria-hidden="true" focusable="false"><circle r="17" fill="none" stroke="#9DBBD6" stroke-width="1.4"/><circle r="12" fill="none" stroke="#9DBBD6" stroke-width="1" stroke-dasharray="1.5 2.5"/><path d="M0-17L4 0 0 17-4 0Z" fill="#fff"/><path d="M-17 0L0-4 17 0 0 4Z" fill="#9DBBD6"/><path d="M0-17L4 0 0 3Z" fill="#FF6B1A"/></svg><span>Морские публикации</span></a>
         <p>Нормативные издания для судов и судоходных компаний. Заявка на сайте, счёт выставляет бухгалтерия.</p>
-        <p class="mono" style="margin-top:14px">ООО «…», ИНН …</p>
-      </div>
-      <div>
-        <h2>Связь</h2>
-        <ul>
+        <p class="mono site-footer__req">ООО «…», ИНН …</p>
+        <ul class="site-footer__contacts">
           <li><a href="mailto:info@example.ru">info@example.ru</a></li>
           <li><a class="mono" href="tel:+70000000000">+7 000 000-00-00</a></li>
         </ul>
       </div>
-      <div>
-        <h2>Документы</h2>
+      <nav aria-labelledby="fcat">
+        <h2 id="fcat">Каталог</h2>
         <ul>
+          <li><a href="katalog.html">Все издания</a></li>
+          <li><a href="razdel.html?slug=sudovye-zhurnaly">Судовые журналы</a></li>
+          <li><a href="razdel.html?slug=itu">ITU</a></li>
+          <li><a href="razdel.html?slug=imo-konvencii">IMO: конвенции</a></li>
+          <li><a href="razdel.html?slug=imo-kodeksy">IMO: кодексы</a></li>
+          <li><a href="razdel.html?slug=imo-rukovodstva">IMO: руководства</a></li>
+          <li><a href="razdel.html?slug=kontrol-gosudarstva-porta">Контроль государства порта</a></li>
+          <li><a href="razdel.html?slug=radiosvyaz">Радиосвязь РФ</a></li>
+          <li><a href="razdel.html?slug=admiralty">Admiralty</a></li>
+          <li><a href="razdel.html?slug=ocimf-ics">OCIMF и ICS</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="fbuy">
+        <h2 id="fbuy">Покупателям</h2>
+        <ul>
+          <li><a href="stranica.html?slug=oplata-i-dostavka">Оплата и доставка</a></li>
+          <li><a href="stranica.html?slug=licenzii-itu">Электронные лицензии ITU</a></li>
+          <li><a href="stranica.html?slug=novye-redakcii-2026">Новые редакции 2026</a></li>
+          <li><a href="stranica.html?slug=obyazatelnye-publikacii">Обязательные публикации</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="fco">
+        <h2 id="fco">Компания</h2>
+        <ul>
+          <li><a href="stranica.html?slug=o-kompanii">О компании</a></li>
+          <li><a href="stranica.html?slug=kontakty">Контакты</a></li>
           <li><a href="#">Политика обработки персональных данных</a></li>
           <li><a href="#">Пользовательское соглашение</a></li>
           <li><a href="#">Реквизиты</a></li>
         </ul>
-      </div>
+      </nav>
     </div>
     <p class="site-footer__legal">© 2026 Морские публикации</p>
   </div>

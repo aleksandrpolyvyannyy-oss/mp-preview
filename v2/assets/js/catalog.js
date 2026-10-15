@@ -8,6 +8,7 @@
   var sortEl = document.getElementById('f-sort');
   var groupBox = document.getElementById('f-group');
   var pubBox = document.getElementById('f-publisher');
+  var pubLinkEl = document.getElementById('f-pub-link');
   var resetEl = document.getElementById('f-reset');
   var toggle = document.querySelector('.filters-toggle');
   var badge = document.querySelector('[data-filter-badge]');
@@ -81,6 +82,9 @@
     var active = (state.group ? 1 : 0) + (state.publisher ? 1 : 0);
     badge.textContent = active ? 'выбрано: ' + active : '';
     statusEl.innerHTML = 'Найдено: <b>' + list.length + '</b> из ' + items.length;
+    /* ссылка на страницу выбранного издателя */
+    pubLinkEl.innerHTML = state.publisher && MP.publisherSlug(state.publisher)
+      ? '<a class="textlink" href="' + MP.publisherHref(state.publisher) + '">Все издания ' + MP.esc(state.publisher) + '</a>' : '';
 
     if (!list.length) {
       resultsEl.innerHTML = '<div class="empty"><h2>Ничего не нашли</h2><p>Проверьте написание или уберите часть условий. Можно искать по названию, артикулу вида MP-007 или слову из названия.</p><button class="btn btn--ink" type="button" id="empty-reset">Сбросить фильтры</button></div>';
@@ -96,7 +100,7 @@
         map[it.section].push(it);
       });
       sections.forEach(function (s) {
-        html += '<section class="cat-group"><h2>' + MP.esc(s) + '<small>' + map[s].length + '</small></h2>' +
+        html += '<section class="cat-group"><h2><a href="' + MP.sectionHref(s) + '">' + MP.esc(s) + '</a><small>' + map[s].length + '</small></h2>' +
           '<ul class="pubs pubs--cat pubs--list">' + map[s].map(function (it) { return MP.card(it); }).join('') + '</ul></section>';
       });
     } else {

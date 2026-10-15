@@ -15,6 +15,11 @@
     if (value == null || value === '') return '';
     return '<div><dt>' + label + '</dt><dd' + (mono ? ' class="mono"' : '') + '>' + MP.esc(value) + '</dd></div>';
   }
+  function rowLink(label, value, href) {
+    if (value == null || value === '') return '';
+    if (!href) return row(label, value);
+    return '<div><dt>' + label + '</dt><dd><a class="spec-link" href="' + MP.esc(href) + '">' + MP.esc(value) + '</a></dd></div>';
+  }
   function shortName(s) { return s.length > 60 ? s.slice(0, 57).replace(/[\s,(]+$/, '') + '...' : s; }
 
   function notFound() {
@@ -35,14 +40,17 @@
     var crumbs = headEl.querySelector('.crumbs');
     crumbs.innerHTML = '<li><a href="index.html">Главная</a></li>' +
       '<li><a href="katalog.html">Каталог</a></li>' +
-      '<li><a href="katalog.html?group=' + encodeURIComponent(it.group) + '">' + MP.esc(it.group) + '</a></li>' +
+      '<li><a href="' + MP.sectionHref(it.section) + '">' + MP.esc(it.section) + '</a></li>' +
       '<li><span aria-current="page" title="' + MP.esc(name) + '">' + MP.esc(shortName(name)) + '</span></li>';
     var h1 = headEl.querySelector('h1');
     if (h1) h1.remove();
     headEl.firstElementChild.classList.add('pagehead--slim');
 
-    var specs = row('Артикул', it.sku, true) + row('Издатель', it.publisher) + row('Год', it.edition) +
-      row('Язык', it.language) + row('Формат', it.format) + row('Страниц', it.pages) + row('Раздел', it.section);
+    var specs = row('Артикул', it.sku, true) +
+      rowLink('Издатель', it.publisher, it.publisher && MP.publisherSlug(it.publisher) ? MP.publisherHref(it.publisher) : '') +
+      row('Год', it.edition) + row('Язык', it.language) + row('Формат', it.format) + row('Страниц', it.pages) +
+      rowLink('Раздел', it.section, MP.sectionHref(it.section));
+    var isItu = it.publisher === 'ITU' || !!it.license_note;
 
     var same = items.filter(function (x) { return x.group === it.group && x.slug !== it.slug; });
     same.sort(function (a, b) {
@@ -76,6 +84,7 @@
             '<ol><li>Добавьте издание в корзину.</li><li>Укажите порт и дату доставки.</li><li>Получите счёт от бухгалтерии.</li></ol></section>' +
           (it.description ? '<section class="prod__desc" aria-labelledby="desc-title"><h2 id="desc-title">Описание</h2><p>' + MP.esc(MP.clean(it.description)) + '</p></section>' : '') +
           (it.license_note ? '<section class="licnote" aria-labelledby="lic-title"><h2 id="lic-title">Электронная лицензия</h2><p>' + MP.esc(cap(it.license_note)) + '</p></section>' : '') +
+          (isItu ? '<p class="prod__more"><a class="textlink" href="stranica.html?slug=licenzii-itu">Как работают электронные лицензии ITU</a></p>' : '') +
         '</div>' +
       '</div>' +
       (same.length ? '<section class="same" aria-labelledby="same-title"><div class="wrap"><h2 id="same-title">Из того же раздела</h2><ul class="pubs pubs--4 pubs--list">' +
