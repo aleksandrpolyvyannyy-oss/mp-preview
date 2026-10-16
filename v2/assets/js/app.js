@@ -344,7 +344,21 @@
     for (var i = 0; i < links.length; i++) links[i].addEventListener('click', function () { set(false); });
   }
 
-  function init() { initHeader(); MP.updateCount(); }
+  /* Telegram: адрес один на весь сайт, берём из glavnaya.json (final.telegram); пока там заглушка «#» */
+  MP.tgHref = function (v) {
+    return typeof v === 'string' && /^(#|https:\/\/(t|telegram)\.me\/[\w\-.\/?=&%]*)$/.test(v) ? v : '#';
+  };
+  MP.applyTelegram = function (root, href) {
+    var els = (root || document).querySelectorAll('[data-tg]');
+    for (var i = 0; i < els.length; i++) els[i].setAttribute('href', MP.tgHref(href));
+  };
+  function initTelegram() {
+    MP.loadContent('glavnaya.json').then(function (d) {
+      if (d && d.final) MP.applyTelegram(document, d.final.telegram);
+    });
+  }
+
+  function init() { initHeader(); MP.updateCount(); initTelegram(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

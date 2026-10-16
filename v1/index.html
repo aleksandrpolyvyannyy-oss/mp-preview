@@ -15,7 +15,7 @@
 <header class="site-header">
   <div class="topbar"><div class="container">
     <p class="topbar-note">Заказ по заявке, счёт выставляет бухгалтерия</p>
-    <a href="tel:+70000000000">+7 000 000-00-00</a>
+    <div class="topbar-contacts"><a href="tel:+70000000000">+7 000 000-00-00</a><a class="tg-link" data-tg href="#" aria-label="Написать в Telegram"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.4 2.9 10.6c-.9.35-.9 1.6.05 1.9l4.7 1.5 1.8 5.6c.2.7 1.1.9 1.6.35l2.6-2.6 4.8 3.5c.6.45 1.5.1 1.65-.65L22.9 4.6c.2-.9-.65-1.5-1.4-1.2zM9.2 13.6l8.4-5.2-6.6 6.3-.3 3.1z" fill="currentColor"/></svg></a></div>
   </div></div>
   <div class="container header-main">
     <a class="logo" href="index.html"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#0a5aa8"/><path d="M6 13c3-3 5 3 10 0s7 3 10 0M6 20c3-3 5 3 10 0s7 3 10 0" fill="none" stroke="#fff" stroke-width="2"/></svg><span>Морские публикации</span></a>
@@ -25,6 +25,7 @@
         <li><a href="stranica.html?slug=oplata-i-dostavka">Как заказать</a></li>
         <li class="has-sub"><button type="button" class="nav-btn" aria-expanded="false"><span>Полезное</span><svg width="12" height="8" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><ul class="submenu"><li><a href="stranica.html?slug=licenzii-itu">Электронные лицензии ITU</a></li><li><a href="stranica.html?slug=novye-redakcii-2026">Новые редакции 2026</a></li><li><a href="stranica.html?slug=obyazatelnye-publikacii">Обязательные публикации</a></li></ul></li>
         <li><a href="stranica.html?slug=kontakty">Контакты</a></li>
+        <li class="nav-tg"><a data-tg href="#"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.4 2.9 10.6c-.9.35-.9 1.6.05 1.9l4.7 1.5 1.8 5.6c.2.7 1.1.9 1.6.35l2.6-2.6 4.8 3.5c.6.45 1.5.1 1.65-.65L22.9 4.6c.2-.9-.65-1.5-1.4-1.2zM9.2 13.6l8.4-5.2-6.6 6.3-.3 3.1z" fill="currentColor"/></svg><span>Написать в Telegram</span></a></li>
       </ul>
       <form class="header-search" role="search" action="katalog.html" method="get">
             <div class="search-box">
@@ -50,8 +51,8 @@
   <section class="hero" aria-labelledby="hero-h">
     <div class="container hero-grid">
       <div class="hero-text">
-        <h1 class="h-display" id="hero-h">Морские нормативные издания для судов и компаний</h1>
-        <p class="lead">Справочники ITU, конвенции и кодексы IMO, издания ЦНИИМФ, судовые журналы. Добавьте издания в корзину, укажите порт и дату доставки. Счёт выставит бухгалтерия.</p>
+        <h1 class="h-display" id="hero-h">Всё для судовой библиотеки в одном каталоге</h1>
+        <p class="lead">Конвенции и кодексы IMO, справочники ITU, издания ЦНИИМФ и судовые журналы. Соберите корзину, укажите порт и дату, а счёт пришлёт наша бухгалтерия.</p>
         <form class="hero-search" role="search" action="katalog.html" method="get">
           <div class="search-box">
             <label class="visually-hidden" for="hero-q">Поиск по названию или артикулу</label>
@@ -63,7 +64,7 @@
           <a class="btn btn--primary btn--lg" href="katalog.html">Перейти в каталог</a>
           <div class="hero-pub"><span>Издатель:</span><a class="chip" href="katalog.html?publisher=ITU">ITU</a><a class="chip" href="katalog.html?publisher=IMO">IMO</a><a class="chip" href="katalog.html?publisher=%D0%A6%D0%9D%D0%98%D0%98%D0%9C%D0%A4">ЦНИИМФ</a></div>
         </div>
-        <p class="hero-note">Оплаты на сайте нет: вы отправляете заявку, бухгалтерия присылает счёт.</p>
+        <ul class="hero-facts" aria-label="Как мы работаем"><li><svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Оплата по счёту на компанию, без карты</span></li><li><svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Книги и электронные лицензии в одной заявке</span></li><li><svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Доставка к судну в порт или в офис</span></li></ul>
       </div>
       <div class="hero-visual">
         <div class="fan">
@@ -80,6 +81,14 @@
     </div>
   </section>
 
+  <section class="strip" id="redakcii-strip" aria-label="Новые редакции 2026" hidden>
+    <div class="strip-in">
+      <span class="strip-label"></span>
+      <p class="strip-text"></p>
+      <a class="strip-cta" href="stranica.html?slug=novye-redakcii-2026"></a>
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="razdely-h">
     <div class="container">
       <div class="section-head"><h2 class="h-section" id="razdely-h">Разделы каталога</h2><p>В каталоге <span data-total>40 изданий</span>.</p></div>
@@ -89,12 +98,19 @@
 
   <section class="section section--mist" aria-labelledby="popular-h">
     <div class="container">
-      <div class="section-head"><h2 class="h-section" id="popular-h">Популярные издания</h2><a href="katalog.html">Весь каталог</a></div>
+      <div class="section-head section-head--note"><div class="head-title"><h2 class="h-section" id="popular-h">Популярные издания</h2><span class="head-note" id="popular-note"></span></div><a href="katalog.html">Весь каталог</a></div>
       <div class="pubs" id="popular"></div>
     </div>
   </section>
 
-  <section class="section" id="kak-zakazat" aria-labelledby="kak-h">
+  <section class="section" id="doverie" aria-labelledby="doverie-h">
+    <div class="container">
+      <div class="section-head"><h2 class="h-section" id="doverie-h">Как работаем с судоходными компаниями</h2></div>
+      <div class="why" id="doverie-list"></div>
+    </div>
+  </section>
+
+  <section class="section section--mist" id="kak-zakazat" aria-labelledby="kak-h">
     <div class="container">
       <div class="section-head"><h2 class="h-section" id="kak-h">Как заказать</h2><p>Три шага, оплата по счёту.</p></div>
       <ol class="steps">
@@ -105,9 +121,9 @@
     </div>
   </section>
 
-  <section class="section section--mist" aria-labelledby="itu-h">
+  <section class="section" aria-labelledby="itu-h">
     <div class="container">
-      <div class="itu">
+      <div class="itu itu--mist">
         <div class="itu-text">
           <h2 class="h-section" id="itu-h">Электронные лицензии ITU</h2>
           <p class="lead">List IV, List V и Maritime Manual выпускаются как электронные лицензии. После покупки ITU присылает инструкцию по установке и активации, лицензию активируют по ней.</p>
@@ -118,13 +134,6 @@
     </div>
   </section>
 
-  <section class="section" id="izdateli" aria-labelledby="izd-h">
-    <div class="container">
-      <div class="section-head"><h2 class="h-section" id="izd-h">Издатели</h2><p>Издания по издателям: ЦНИИМФ, IMO и ITU.</p></div>
-      <div class="tiles tiles--3" id="publishers"></div>
-    </div>
-  </section>
-
   <section class="section section--mist" id="polezno" aria-labelledby="pol-h">
     <div class="container">
       <div class="section-head"><h2 class="h-section" id="pol-h">Полезное судовладельцу</h2><p>Короткие справочные страницы: что нужно знать до заказа.</p></div>
@@ -132,14 +141,7 @@
     </div>
   </section>
 
-  <section class="section" id="pochemu" aria-labelledby="why-h">
-    <div class="container">
-      <div class="section-head"><h2 class="h-section" id="why-h">Почему удобно заказывать у нас</h2></div>
-      <div class="why" id="why"></div>
-    </div>
-  </section>
-
-  <section class="section section--mist" id="dostavka-i-oplata" aria-labelledby="faq-h">
+  <section class="section" id="dostavka-i-oplata" aria-labelledby="faq-h">
     <div class="container faq-wrap">
       <div>
         <h2 class="h-section" id="faq-h">Вопросы о доставке и оплате</h2>
@@ -151,6 +153,16 @@
         <details><summary>Можно ли заказать издание, которого нет в каталоге?</summary><div><p>Напишите название в комментарии к заявке или на почту info@example.ru. Менеджер проверит, можно ли его заказать.</p></div></details>
         <details><summary>Какие документы нужны для бухгалтерии?</summary><div><p>Для счёта нужны название компании, почта и телефон. ИНН и другие реквизиты, а также состав документов менеджер уточнит при согласовании заявки.</p></div></details>
       </div>
+    </div>
+  </section>
+
+  <section class="final" id="final" aria-labelledby="final-h">
+    <div class="container final-in">
+      <div class="final-text">
+        <h2 id="final-h">Не нашли нужное издание?</h2>
+        <p id="final-p"></p>
+      </div>
+      <div class="final-actions" id="final-actions"></div>
     </div>
   </section>
 </main>

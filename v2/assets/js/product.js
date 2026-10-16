@@ -80,6 +80,7 @@
             '</div>' +
             '<p class="buy__status" id="p-status" role="status" aria-live="polite"></p>' +
           '</div>' +
+          '<div id="srochno"></div>' +
           '<section class="howto" aria-labelledby="howto-title"><h2 id="howto-title">Как заказать</h2>' +
             '<ol><li>Добавьте издание в корзину.</li><li>Укажите порт и дату доставки.</li><li>Получите счёт от бухгалтерии.</li></ol></section>' +
           (it.description ? '<section class="prod__desc" aria-labelledby="desc-title"><h2 id="desc-title">Описание</h2><p>' + MP.esc(MP.clean(it.description)) + '</p></section>' : '') +
@@ -89,6 +90,16 @@
       '</div>' +
       (same.length ? '<section class="same" aria-labelledby="same-title"><div class="wrap"><h2 id="same-title">Из того же раздела</h2><ul class="pubs pubs--4 pubs--list">' +
         same.map(function (x) { return MP.card(x); }).join('') + '</ul></div></section>' : '');
+
+    /* строка «Нужно срочно к рейсу?» под ценой и кнопкой: текст и адрес Telegram из glavnaya.json */
+    MP.loadContent('glavnaya.json').then(function (d) {
+      var s = d && d.kartochka_srochno, slot = document.getElementById('srochno');
+      if (!s || !s.text || !slot) return;
+      slot.innerHTML = '<aside class="srochno" aria-label="Срочный заказ">' +
+        '<svg class="srochno__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21.5 3 2.5 10.4l5.6 2.1 2.1 6.4 3.1-4 4.9 3.6z"/><path d="M8.1 12.5 21.5 3"/></svg>' +
+        '<p>' + MP.esc(MP.clean(s.text)) + '</p>' +
+        '<a class="textlink" href="' + MP.esc(MP.tgHref(s.telegram)) + '" data-tg-card>Написать в Telegram</a></aside>';
+    });
 
     var val = document.getElementById('q-val');
     var status = document.getElementById('p-status');

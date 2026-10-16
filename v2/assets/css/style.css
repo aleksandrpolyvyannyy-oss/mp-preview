@@ -97,16 +97,17 @@ button{cursor:pointer}
 .site-header.is-open .burger .i-open{display:none}
 .site-header.is-open .burger .i-close{display:block}
 @media (min-width:480px){.cartlink__t{display:inline}}
-@media (min-width:1240px){
+@media (min-width:1280px){
   .burger{display:none}
-  .nav{display:flex;align-items:center;gap:22px;position:static;border:0;padding:0;background:transparent}
+  .nav{display:flex;align-items:center;gap:16px;position:static;border:0;padding:0;background:transparent}
   .nav__list{display:flex;gap:4px}
-  .nav__list a{border:0;font-size:15px;padding:0 10px;min-height:44px;position:relative}
-  .nav__list a::after{content:"";position:absolute;left:10px;right:10px;bottom:6px;height:2px;background:var(--signal);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+  .nav__list a{border:0;font-size:15px;padding:0 8px;min-height:44px;position:relative}
+  .nav__list a::after{content:"";position:absolute;left:8px;right:8px;bottom:6px;height:2px;background:var(--signal);transform:scaleX(0);transform-origin:left;transition:transform .2s}
   .nav__list a:hover::after,.nav__list a[aria-current="page"]::after{transform:scaleX(1)}
-  .hsearch{margin:0;width:170px}
+  .hsearch{margin:0;width:132px}
+  .hsearch input{padding:0 4px 0 10px}
   .nav__phone{margin:0;min-height:44px;font-size:14px;white-space:nowrap}
-  .site-header__bar{gap:22px}
+  .site-header__bar{gap:16px}
   .logo{margin-right:0;flex:none}
   .site-header__bar .nav{margin-left:auto}
 }
@@ -498,7 +499,7 @@ button{cursor:pointer}
 .nav__sub{display:none;flex-basis:100%;padding:0 0 8px 14px}
 .nav__item--sub.is-open>.nav__sub{display:block}
 .nav__sub a{min-height:44px;font-size:15.5px;font-weight:500;border-bottom:0;color:#BFD2E4}
-@media (min-width:1240px){
+@media (min-width:1280px){
   .nav{max-height:none;overflow:visible}
   .nav__item--sub{position:relative;align-items:center;flex-wrap:nowrap;border:0}
   .nav__item--sub>a{flex:none}
@@ -509,7 +510,7 @@ button{cursor:pointer}
   .nav__sub a::after{display:none}
   .nav__sub a:hover{background:rgba(157,187,214,.12);color:#fff}
 }
-@media (min-width:1240px) and (hover:hover){
+@media (min-width:1280px) and (hover:hover){
   .nav__item--sub:hover>.nav__sub{display:block}
 }
 
@@ -688,3 +689,59 @@ a.useful__card:hover{border-color:var(--ink);border-top-color:var(--signal)}
   .tile--major .tile__covers img:nth-child(3){margin-top:0}
   .tile--major .tile__covers img:nth-child(4){margin-top:34px}
 }
+
+/* =====================================================================
+   Главная под продажи (16.10.2026): факты первого экрана, полоса «Редакции 2026»,
+   популярные с подписью, «Как работаем», финальный блок, Telegram в шапке и в карточке.
+   ===================================================================== */
+
+/* Telegram в шапке: на телефоне строка меню с подписью, на компьютере значок рядом с телефоном */
+.nav__tg{display:flex;align-items:center;gap:10px;min-height:48px;margin-top:4px;font-weight:600;font-size:17px;color:#D4E2EE;text-decoration:none}
+.nav__tg svg{flex:none}
+.nav__tg:hover{color:var(--signal)}
+@media (min-width:1280px){
+  .nav__tg{justify-content:center;width:44px;min-height:44px;margin:0 0 0 -10px;border:1.5px solid rgba(157,187,214,.4);border-radius:3px}
+  .nav__tg:hover{border-color:var(--signal)}
+  .nav__tg-t{display:none}
+}
+
+/* три факта под кнопкой первого экрана */
+.hero__facts{display:grid;gap:8px;margin-top:28px;max-width:26em;font-size:15px;line-height:1.45;color:#D4E2EE}
+.hero__facts li{position:relative;padding-left:26px}
+.hero__facts li::before{content:"";position:absolute;left:4px;top:.28em;width:6px;height:11px;border:solid var(--signal);border-width:0 2.5px 2.5px 0;transform:rotate(40deg)}
+
+/* полоса «Редакции 2026» */
+.strip{background:var(--sheet);padding-block:20px 0}
+.strip__in{display:grid;gap:8px;justify-items:start;padding:14px 16px 16px;background:var(--paper);border:1px solid var(--rule);border-left:6px solid var(--signal);border-radius:var(--radius)}
+.strip__label{font-family:var(--f-mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--signal-ink)}
+.strip__text{font-size:15px;line-height:1.5;color:var(--ink)}
+.strip__cta{min-height:44px;padding:0 18px;font-size:15px;margin-top:4px}
+.strip+.section{padding-top:clamp(36px,4.5vw,64px)}
+@media (min-width:900px){
+  .strip__in{grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:20px;padding:12px 16px 12px 20px}
+  .strip__text{font-size:14.5px;line-height:1.4}
+  .strip__cta{margin-top:0}
+}
+
+/* подпись к заголовку «Популярные издания» */
+.section__title{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;min-width:0}
+.section__note{font-size:14px;color:var(--ink-2)}
+
+/* финальный блок перед подвалом */
+.final{background:var(--signal);color:#07192C;padding-block:clamp(44px,6vw,72px)}
+.final h2{font-size:clamp(1.65rem,4.4vw,2.5rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.final p{margin-top:12px;max-width:36em;font-size:17px;line-height:1.55}
+.final__in{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center}
+.final__actions{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.final__contacts{display:flex;flex-wrap:wrap;gap:0 24px}
+.final__contacts a{display:inline-flex;align-items:center;min-height:44px;font-weight:700;color:#07192C;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;overflow-wrap:anywhere}
+.final__contacts a:hover{text-decoration-color:#fff}
+.final .btn--ink:hover{background:#000}
+.final :focus-visible{outline-color:#07192C}
+@media (min-width:900px){.final__in{grid-template-columns:minmax(0,1fr) auto;gap:56px}}
+
+/* строка про срочный заказ в карточке издания */
+.srochno{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;align-items:start;margin-top:12px;padding:14px 16px;background:#FFF3EA;border:1px solid #F0C8AC;border-left:5px solid var(--signal);border-radius:var(--radius)}
+.srochno__ic{margin-top:2px;color:var(--signal-ink)}
+.srochno p{font-size:15.5px;line-height:1.5;color:#3D1B08}
+.srochno .textlink{grid-column:2;justify-self:start}

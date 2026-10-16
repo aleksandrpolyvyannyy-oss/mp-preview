@@ -525,3 +525,73 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* очень узкие телефоны: шапка в одну строку */
 @media (max-width:399px){.header-main{gap:0 8px}.logo{font-size:.9375rem;gap:6px}.logo svg{width:24px;height:24px}.cart-link{padding:0 6px}}
+
+
+/* ======================================================================
+   Главная под продажи (16.10): значок Telegram, полоса редакций,
+   факты первого экрана, популярные с пометкой, финальный блок
+   ====================================================================== */
+
+/* ---------- Telegram в шапке: на компьютере у телефона, на телефоне в бургере ---------- */
+.topbar-contacts{display:flex;align-items:center;gap:4px}
+.topbar .tg-link{display:none;justify-content:center;width:44px;color:var(--accent)}
+.topbar .tg-link:hover{color:var(--accent-dark)}
+.nav .nav-tg a{gap:10px;color:var(--accent-dark)}
+@media (min-width:768px){
+  .topbar .tg-link{display:inline-flex}
+  .nav .nav-tg{display:none}
+}
+
+/* ---------- первый экран: три факта вместо мелкой пометки ---------- */
+.hero-facts{display:grid;gap:8px;max-width:56ch}
+.hero-facts li{display:flex;align-items:flex-start;gap:10px;color:var(--ink);font-size:.9375rem;line-height:1.45}
+.hero-facts svg{flex:none;margin-top:3px;color:var(--accent)}
+
+/* ---------- полоса «Редакции 2026» ---------- */
+.strip{background:var(--accent-tint);border-bottom:1px solid #b9d1ea}
+.strip[hidden]{display:none}
+.strip-in{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;width:100%;max-width:1440px;margin-inline:auto;padding:12px var(--gutter) 4px}
+.strip-label{flex:none;padding:3px 10px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.8125rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.5}
+.strip-text{flex:1 1 100%;font-size:.875rem;line-height:1.4;color:var(--ink)}
+.strip-cta{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;white-space:nowrap}
+.strip-cta svg{flex:none}
+@media (min-width:900px){
+  .strip-in{flex-wrap:nowrap;gap:0 16px;padding-block:6px}
+  .strip-text{flex:1 1 auto;min-width:0;font-size:.875rem}
+  .strip-label{letter-spacing:0}
+}
+@media (min-width:1280px){.strip-in{padding-inline:24px}}
+
+/* ---------- заголовок раздела с мелкой пометкой ---------- */
+.section-head--note{align-items:center}
+.head-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;min-width:0}
+.head-note{font-size:.8125rem;color:var(--ink-2)}
+.head-note:empty{display:none}
+
+/* ---------- блок ITU на белом фоне ---------- */
+.itu--mist{background:var(--mist)}
+
+/* ---------- финальный блок ---------- */
+.final{background:var(--accent);color:#fff;padding-block:56px}
+@media (min-width:768px){.final{padding-block:72px}}
+.final-in{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center}
+@media (min-width:900px){.final-in{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px}}
+.final-text{display:grid;gap:14px}
+.final h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.625rem,1.2rem + 1.6vw,2.375rem);line-height:1.15;letter-spacing:-.01em;color:#fff}
+.final-text p{color:#e6f0fa;font-size:1.0625rem;max-width:56ch}
+.final-actions{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+@media (min-width:900px){.final-actions{align-items:flex-start}}
+.final :focus-visible{outline-color:#fff}
+.btn--light{background:#fff;border-color:#fff;color:var(--accent-dark)}
+.btn--light:hover{background:var(--accent-tint);border-color:var(--accent-tint);color:var(--accent-dark)}
+.final-link{display:inline-flex;align-items:center;min-height:44px;color:#fff;font-weight:600;font-size:1.0625rem}
+.final-link:hover{color:#e3eef9}
+.final-link--mono{font-family:var(--mono);font-weight:400}
+.final .btn{margin-bottom:6px}
+
+/* ---------- карточка: строка про срочный заказ ---------- */
+.srochno{padding-left:12px;border-left:3px solid var(--accent);color:var(--ink-2);font-size:.9375rem}
+.srochno a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-weight:600;vertical-align:middle}
+/* полоса редакций по ширине основного контейнера (текст сокращён, влезает в одну строку) */
+.strip-in{max-width:var(--wrap)}
+@media (min-width:1280px){.strip-in{padding-inline:var(--gutter)}}

@@ -38,6 +38,7 @@
   function coverSrc(item) { return '../' + item.cover; }
   function cardUrl(item) { return 'kartochka.html?slug=' + encodeURIComponent(item.slug); }
   var CHECK = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var TG_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.4 2.9 10.6c-.9.35-.9 1.6.05 1.9l4.7 1.5 1.8 5.6c.2.7 1.1.9 1.6.35l2.6-2.6 4.8 3.5c.6.45 1.5.1 1.65-.65L22.9 4.6c.2-.9-.65-1.5-1.4-1.2zM9.2 13.6l8.4-5.2-6.6 6.3-.3 3.1z" fill="currentColor"/></svg>';
   var ARROW = '<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6h15M11 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
   /* ---------- данные ---------- */
@@ -261,6 +262,10 @@
     });
     var here = window.location.pathname.split('/').pop() + window.location.search;
     $$('.nav a').forEach(function (a) { if (a.getAttribute('href') === here) a.setAttribute('aria-current', 'page'); });
+    loadOpt('glavnaya.json').then(function (g) {
+      var tg = g && g.final && g.final.telegram;
+      if (tg) $$('[data-tg]').forEach(function (a) { if (a.closest('.site-header')) a.setAttribute('href', tg); });
+    });
     updateCount();
     window.addEventListener('storage', function (e) { if (e.key === CART_KEY) { updateCount(); refreshSlots(); } });
   }
@@ -288,7 +293,7 @@
   }
 
   /* ---------- главная ---------- */
-  var POPULAR = ['itu-list-v', 'solas', 'stcw', 'colreg', 'ism', 'isps', 'imdg', 'lsa'];
+  var POPULAR = ['colreg-cniimf', 'colreg', 'deck-log', 'ism', 'solas', 'marpol', 'stcw', 'isps'];
   function listOf(v) {
     if (v && !Array.isArray(v) && typeof v === 'object') {
       var inner = pick(v, ['cards', 'items', 'list']);
@@ -321,18 +326,6 @@
           '<span class="tile-foot"><span>' + g.count + ' ' + plural(g.count, 'издание', 'издания', 'изданий') + '</span>' + ARROW + '</span></a>';
       }).join('');
     }
-    var pubsEl = $('#publishers');
-    if (pubsEl) {
-      var izd = entries(IZDATELI);
-      pubsEl.innerHTML = ['ЦНИИМФ', 'IMO', 'ITU'].map(function (name) {
-        var n = list.filter(function (it) { return it.publisher === name; }).length;
-        var e = findEntry(izd, name);
-        var sub = e ? plain(paras(e.intro)[0], 140) : '';
-        return '<a class="tile" href="' + publisherUrl(name) + '"><h3>' + esc(name) + '</h3>' +
-          '<p class="tile-sub">' + (sub ? esc(sub) : '&nbsp;') + '</p>' +
-          '<span class="tile-foot"><span>' + n + ' ' + plural(n, 'издание', 'издания', 'изданий') + '</span>' + ARROW + '</span></a>';
-      }).join('');
-    }
     var useful = $('#useful');
     if (useful) {
       var ul = listOf(pick(glavnaya, ['poleznoe', 'polezno', 'poleznoe_sudovladelcu', 'useful', 'pages', 'cards', 'anonsy', 'anons']));
@@ -344,19 +337,41 @@
           '<span class="tile-foot"><span>Читать</span>' + ARROW + '</span></a>';
       }).join('');
     }
-    var why = $('#why');
-    if (why) {
-      var wl = listOf(pick(glavnaya, ['pochemu', 'pochemu_my', 'why', 'preimushchestva', 'advantages', 'reasons'])).slice(0, 4);
-      why.innerHTML = wl.length ? '<ol class="why-list">' + wl.map(function (w, i) {
-        var title = typeof w === 'string' ? '' : pick(w, ['title', 'name', 'h3', 'head']);
-        var text = typeof w === 'string' ? w : pick(w, ['text', 'description', 'desc', 'p']);
+    var strip = $('#redakcii-strip'), rs = glavnaya && glavnaya.redakcii_strip;
+    if (strip && rs) {
+      $('.strip-label', strip).textContent = rs.label || '';
+      $('.strip-text', strip).textContent = rs.text || '';
+      var cta = $('.strip-cta', strip);
+      cta.textContent = rs.cta || '';
+      if (rs.href && /^(stranica|razdel|izdatel|kartochka|katalog)\.html(\?[A-Za-z0-9=&%._-]*)?$/.test(rs.href)) cta.setAttribute('href', rs.href);
+      cta.insertAdjacentHTML('beforeend', ARROW);
+      strip.hidden = false;
+    }
+    var dv = glavnaya && glavnaya.doverie, dvEl = $('#doverie-list');
+    if (dvEl) {
+      var di = dv ? listOf(dv).slice(0, 4) : [];
+      if (dv && dv.title) $('#doverie-h').textContent = dv.title;
+      dvEl.innerHTML = di.length ? '<ol class="why-list">' + di.map(function (w, i) {
         return '<li class="why-item"><span class="why-n" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span>' +
-          (title ? '<h3>' + esc(title) + '</h3>' : '') + (text ? '<p>' + md(text) + '</p>' : '') + '</li>';
+          '<h3>' + esc(w.title || '') + '</h3><p>' + esc(w.text || '') + '</p></li>';
       }).join('') + '</ol>' : soon();
     }
+    var fin = glavnaya && glavnaya.final;
+    if (fin) {
+      if (fin.title) $('#final-h').textContent = fin.title;
+      $('#final-p').textContent = fin.text || '';
+      var phone = String(fin.phone || ''), tel = phone.replace(/[^\d+]/g, '');
+      $('#final-actions').innerHTML =
+        '<a class="btn btn--light btn--lg" data-tg href="' + esc(fin.telegram || '#') + '">' + TG_ICON + 'Написать в Telegram</a>' +
+        (tel ? '<a class="final-link final-link--mono" href="tel:' + esc(tel) + '">' + esc(phone) + '</a>' : '') +
+        (fin.email ? '<a class="final-link" href="mailto:' + esc(fin.email) + '">' + esc(fin.email) + '</a>' : '');
+    }
+    var popNote = $('#popular-note');
+    if (popNote && glavnaya && glavnaya.populyarnye && glavnaya.populyarnye.note) popNote.textContent = glavnaya.populyarnye.note;
     var pops = $('#popular');
     if (pops) {
-      pops.innerHTML = POPULAR.map(function (s) { return bySlug(list, s); }).filter(Boolean).map(function (it) { return pubCard(it, true); }).join('');
+      var pslugs = (glavnaya && glavnaya.populyarnye && Array.isArray(glavnaya.populyarnye.slugs) && glavnaya.populyarnye.slugs.length) ? glavnaya.populyarnye.slugs : POPULAR;
+      pops.innerHTML = pslugs.map(function (s) { return bySlug(list, s); }).filter(Boolean).map(function (it) { return pubCard(it, true); }).join('');
     }
     var itu = $('#itu-list');
     if (itu) {
@@ -481,7 +496,7 @@
     var m = $('meta[name="description"]');
     if (m) m.setAttribute('content', desc);
   }
-  function initProduct(list) {
+  function initProduct(list, glavnaya) {
     var slug = new URLSearchParams(window.location.search).get('slug') || '';
     var it = bySlug(list, slug);
     var root = $('#product');
@@ -527,6 +542,7 @@
               '<button type="button" class="btn btn--primary btn--lg" id="add-main">Добавить в корзину</button></div>' +
             '<p class="buy-status" id="buy-status" role="status"></p>' +
           '</div>' +
+          (glavnaya && glavnaya.kartochka_srochno && glavnaya.kartochka_srochno.text ? '<p class="srochno">' + esc(glavnaya.kartochka_srochno.text) + ' <a data-tg href="' + esc(glavnaya.kartochka_srochno.telegram || '#') + '">' + TG_ICON + 'Написать в Telegram</a></p>' : '') +
           (it.license_note ? '<div class="plaque"><strong>Электронная лицензия</strong><p>' + esc(it.license_note.charAt(0).toUpperCase() + it.license_note.slice(1)) + '</p></div>' : '') +
           (it.publisher === 'ITU' || it.license_note ? '<p class="itu-more"><a href="stranica.html?slug=licenzii-itu">Как работают электронные лицензии ITU</a></p>' : '') +
           '<div class="howto"><h2 class="block-title howto-head">Как заказать</h2><ol>' +
@@ -906,14 +922,14 @@
       loadCatalog(),
       needsText ? loadOpt('razdely.json') : null,
       needsText ? loadOpt('izdateli.json') : null,
-      page === 'home' ? loadOpt('glavnaya.json') : null,
+      page === 'home' || page === 'product' ? loadOpt('glavnaya.json') : null,
       page === 'info' && /^[a-z0-9-]+$/.test(qslug) ? loadOpt('pages/' + qslug + '.json') : null
     ]).then(function (r) {
       var list = r[0];
       RAZDELY = r[1]; IZDATELI = r[2];
       if (page === 'home') initHome(list, r[3]);
       if (page === 'catalog') initCatalog(list);
-      if (page === 'product') initProduct(list);
+      if (page === 'product') initProduct(list, r[3]);
       if (page === 'cart') initCart(list);
       if (page === 'section') initSection(list);
       if (page === 'publisher') initPublisher(list);
